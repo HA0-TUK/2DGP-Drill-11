@@ -165,6 +165,10 @@ class Boy:
         if group == 'boy:ball':
             self.ball_count += 1
 
+        elif group == 'boy:zombie':
+            # 소년과 좀비가 충돌하면 게임 종료
+            game_framework.quit()
+        
     def update(self):
         self.state_machine.update()
 
@@ -186,4 +190,5 @@ class Boy:
             game_world.add_object(ball, 1)
             game_world.add_collision_pair('grass:ball', None, ball)
             game_world.add_collision_pair('boy:ball', None, ball)
+            game_world.add_collision_pair('ball:zombie', ball, None)
 
