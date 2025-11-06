@@ -20,7 +20,8 @@ FRAMES_PER_ACTION = 10.0
 
 class Zombie:
     def __init__(self):
-        self.x, self.y = random.randint(0, 1600), 150
+        # 왼편까지 포함해서 생성하니까 시작하자마자 게임 오버되는 현상 발생
+        self.x, self.y = random.randint(800, 1600), 150
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
         self.hit_count = 0  # 공에 맞은 횟수
@@ -32,22 +33,25 @@ class Zombie:
         return self.x - 100 * size_ratio, self.y - 100 * size_ratio, self.x + 100 * size_ratio, self.y + 100 * size_ratio
 
     def handle_collision(self, group, other):
-            pass
+        if group == 'ball:zombie':
             # 땅에 떨어진 볼과는 충돌하지 않음
-
-            # 첫번째 히트: 크기를 반으로 줄임
-
-            # 두번째 히트: 좀비 제거
-
+            if not other.stopped:
+                self.hit_count += 1
+                if self.hit_count == 1:
+                    # 첫번째 히트: 크기를 반으로 줄임
+                    self.size = 100
+                elif self.hit_count >= 2:
+                    # 두번째 히트: 좀비 제거
+                    game_world.remove_object(self)
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         self.x += RUN_SPEED_PPS * self.dir * game_framework.frame_time
         if self.x > 1600:
             self.dir = -1
-        elif self.x < 0:
+        elif self.x < 800:
             self.dir = 1
-        self.x = clamp(0, self.x, 1600)
+        self.x = clamp(800, self.x, 1600)
 
 
     def handle_event(self, event):
