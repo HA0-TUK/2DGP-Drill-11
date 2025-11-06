@@ -21,7 +21,7 @@ FRAMES_PER_ACTION = 10.0
 class Zombie:
     def __init__(self):
         # 왼편까지 포함해서 생성하니까 시작하자마자 게임 오버되는 현상 발생
-        self.x, self.y = random.randint(800, 1600), 150
+        self.x, self.y = random.randint(800, 1600), 150 #생성을 오른편으로 한정
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
         self.hit_count = 0  # 공에 맞은 횟수
@@ -39,6 +39,7 @@ class Zombie:
                 self.hit_count += 1
                 if self.hit_count == 1:
                     # 첫번째 히트: 크기를 반으로 줄임
+                    self.y -= 50 #공중부양 방지
                     self.size = 100
                 elif self.hit_count >= 2:
                     # 두번째 히트: 좀비 제거
