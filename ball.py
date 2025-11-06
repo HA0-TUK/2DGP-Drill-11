@@ -30,12 +30,7 @@ class Ball:
             game_world.remove_object(self)
         elif group == 'grass:ball':
             self.stopped = True
-        
-        elif group == 'ball:zombie':
-            pass
-            # 땅에 떨어진 볼은 좀비와 충돌하지 않음
 
-                # 볼이 좀비에 맞으면 볼 제거
  
         
 
