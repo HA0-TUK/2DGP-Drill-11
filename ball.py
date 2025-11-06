@@ -32,12 +32,10 @@ class Ball:
             self.stopped = True
         
         elif group == 'ball:zombie':
-            pass
             # 땅에 떨어진 볼은 좀비와 충돌하지 않음
-
+            if not self.stopped:
                 # 볼이 좀비에 맞으면 볼 제거
- 
-        
+                game_world.remove_object(self)
 
     def update(self):
         if self.stopped:
